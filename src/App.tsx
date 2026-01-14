@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 import MapComponent from './components/MapComponent';
+import { SearchableSelect } from './components/SearchableSelect';
 import { buildGraph } from './utils/transitNetwork';
 import type { Graph } from './utils/transitNetwork';
 
@@ -74,7 +75,17 @@ function App() {
     return `${min} min`;
   };
 
+  const stationOptions = useMemo(() => {
+    if (!graph) return [];
+    return Array.from(graph.nodes.values()).map(n => ({
+      id: n.id,
+      label: n.name,
+      subLabel: n.lines.join(', ') // Add line info as subtext
+    })).sort((a, b) => a.label.localeCompare(b.label));
+  }, [graph]);
+
   return (
+
     <div className="flex h-screen bg-gray-900 text-white overflow-hidden">
       {/* Sidebar */}
       <div className="w-96 flex-shrink-0 flex flex-col border-r border-gray-800 bg-gray-950 p-6 z-10 shadow-xl">
@@ -121,21 +132,34 @@ function App() {
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-4">
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Route</label>
-            <div className="flex items-center gap-2">
-              <MapPin size={16} className={origin ? "text-green-500" : "text-gray-600"} />
-              <div onClick={() => setSelectionMode('origin')} className={clsx("flex-1 p-3 rounded border cursor-pointer", selectionMode === 'origin' ? "border-green-500 bg-gray-900" : "border-gray-800 bg-gray-900")}>
-                {origin && graph ? graph.nodes.get(origin)?.name : "Select Origin"}
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin size={16} className={dest ? "text-red-500" : "text-gray-600"} />
-              <div onClick={() => setSelectionMode('destination')} className={clsx("flex-1 p-3 rounded border cursor-pointer", selectionMode === 'destination' ? "border-red-500 bg-gray-900" : "border-gray-800 bg-gray-900")}>
-                {dest && graph ? graph.nodes.get(dest)?.name : "Select Destination"}
-              </div>
-            </div>
+
+            <SearchableSelect
+              placeholder="Select Origin"
+              options={stationOptions}
+              value={origin}
+              onChange={(val) => {
+                setOrigin(val);
+                if (val) setSelectionMode('destination');
+              }}
+              icon={<MapPin size={16} className={origin ? "text-green-500" : "text-gray-600"} />}
+              activeColor="border-green-500"
+            />
+
+            <SearchableSelect
+              placeholder="Select Destination"
+              options={stationOptions}
+              value={dest}
+              onChange={(val) => {
+                setDest(val);
+                if (val) setSelectionMode('origin');
+              }}
+              icon={<MapPin size={16} className={dest ? "text-red-500" : "text-gray-600"} />}
+              activeColor="border-red-500"
+            />
           </div>
+
         </div>
 
         <div className="my-6 border-t border-gray-800" />
