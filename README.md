@@ -1,73 +1,55 @@
-# React + TypeScript + Vite
+# BLR Transit Engine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-fidelity transit simulation engine for Bengaluru, comparing **Namma Metro** travel times against realistic road traffic scenarios to demonstrate rail network efficiency ("Delhi-NCR Parity" Model).
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Interactive Map**: Visualizes Metro lines (including Phase 2/2B) and road bottlenecks.
+*   **Pathfinding Engine**: 
+    *   **Metro**: Custom Dijkstra algorithm with interchange penalties (Majestic, etc.) and peak headway delays.
+    *   **Road**: Turf.js spatial analysis with real-time congestion zones (Silk Board, Hebbal).
+*   **Search**: Searchable autocomplete for 60+ metro stations.
+*   **Comparison Dashboard**: Real-time "Time Saved" metrics and efficiency gains.
+*   **Editorial Design**: Premium, "Warm Stone" aesthetic with high-contrast data visualization.
 
-## React Compiler
+## Methodology
+See [METHODOLOGY.md](./METHODOLOGY.md) for detailed algorithms, speed assumptions, and data sources.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Data Sources
+*   **Metro Data**: OpenStreetMap & BMRCL (Phase 1, 2, 2A, 2B alignments).
+*   **Traffic Models**: TomTom Traffic Index citations for peak/off-peak speeds.
 
-## Expanding the ESLint configuration
+## Development
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
+*   Node.js (v18+)
+*   npm
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Setup
+```bash
+git clone https://github.com/your-username/blr-transit-sim.git
+cd blr-transit-sim
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Run Locally
+```bash
+npm run dev
 ```
+
+## Deployment
+
+### Deploy to Vercel
+Click the button below to deploy your own instance of the BLR Transit Engine to Vercel.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAmriteshKhare%2Fblr-transit-sim)
+
+### Manual Deployment
+1.  Build the project:
+    ```bash
+    npm run build
+    ```
+2.  Deploy the `dist` folder to any static host (Vercel, Netlify, GitHub Pages).
+
+---
+*Built with React, TypeScript, Leaflet, and Turf.js*
