@@ -86,20 +86,20 @@ function App() {
 
   return (
 
-    <div className="flex h-screen bg-[#FDFCF8] text-stone-900 overflow-hidden font-sans selection:bg-orange-100 selection:text-orange-900">
+    <div className="flex flex-col md:flex-row h-screen bg-[#FDFCF8] text-stone-900 overflow-hidden font-sans selection:bg-orange-100 selection:text-orange-900">
       {/* Sidebar */}
-      <div className="w-[400px] flex-shrink-0 flex flex-col border-r border-stone-200 bg-white p-8 z-20 shadow-xl relative">
+      <div className="order-2 md:order-1 w-full md:w-[400px] h-[45vh] md:h-full flex-shrink-0 flex flex-col border-t md:border-t-0 md:border-r border-stone-200 bg-white p-4 md:p-8 z-20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] md:shadow-xl relative overflow-y-auto">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-rose-400 to-stone-600 opacity-90"></div>
 
-        <div className="mb-12">
-          <h1 className="text-sm font-bold tracking-[0.2em] uppercase text-stone-900 mb-2">
+        <div className="mb-6 md:mb-12">
+          <h1 className="text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-stone-900 mb-1 md:mb-2">
             BLR Transit Engine
           </h1>
-          <p className="text-stone-500 text-xs tracking-wide font-medium">Delhi-NCR Parity Model / v1.0</p>
+          <p className="text-stone-500 text-[10px] md:text-xs tracking-wide font-medium">Delhi-NCR Parity Model / v1.0</p>
         </div>
 
         {/* Controls */}
-        <div className="space-y-10">
+        <div className="space-y-6 md:space-y-10">
           <div className="space-y-3">
             <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Temporal Mode</label>
             <div className="flex border border-stone-200 rounded-sm p-1 gap-1 bg-stone-50">
@@ -239,7 +239,7 @@ function App() {
       </div>
 
       {/* Map */}
-      <div className="flex-1 h-full relative">
+      <div className="order-1 md:order-2 flex-1 h-[55vh] md:h-full relative">
         {graph && (
           <MapComponent
             graph={graph}
@@ -250,7 +250,7 @@ function App() {
             destId={dest}
           />
         )}
-        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md border border-stone-200 px-3 py-2 rounded-sm text-[10px] font-bold tracking-wide text-stone-600 pointer-events-none z-[1000] uppercase shadow-sm">
+        <div className="absolute top-4 right-4 left-4 md:left-auto text-center md:text-left bg-white/90 backdrop-blur-md border border-stone-200 px-3 py-2 rounded-sm text-[10px] font-bold tracking-wide text-stone-600 pointer-events-none z-[1000] uppercase shadow-sm">
           METRO: 34-60 KM/H &nbsp;|&nbsp; ROAD: 10-20 KM/H
         </div>
       </div>
